@@ -11,7 +11,8 @@ namespace Officina.Models
     public class Client
     {
         public long ClientId { get; set; }
-        //public ClientType ClientType { get; set; }
+        [Column("client_type")]
+        public string ClientType { get; set; }
         public ClientDetail ClientDetail { get; set; }
         public List<Car> Cars { get; set; }
 

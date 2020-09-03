@@ -31,7 +31,8 @@ namespace Officina.Context
         {
             //----- ereditarietà clienti
             modelBuilder.Entity<Client>()
-                .HasDiscriminator<string>("client_type")
+                //.HasDiscriminator<string>("client_type")
+                .HasDiscriminator(b => b.ClientType)
                 .HasValue<ClientCompany>("COMPANY")
                 .HasValue<PrivateClient>("PRIVATE");
             //----- 1-1 clienti - client detail
@@ -100,5 +101,7 @@ namespace Officina.Context
                .HasForeignKey(b => b.ServiceId);
 
         }
+
+        public DbSet<Officina.Models.Piece> Piece { get; set; }
     }
 }

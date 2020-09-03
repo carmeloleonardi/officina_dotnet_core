@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Officina.Context;
 
 namespace Officina.Migrations
 {
     [DbContext(typeof(OfficinaContext))]
-    partial class OfficinaContextModelSnapshot : ModelSnapshot
+    [Migration("20200903101351_InitialCreate_1")]
+    partial class InitialCreate_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,15 +86,19 @@ namespace Officina.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClientType")
-                        .IsRequired()
                         .HasColumnName("client_type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("client_type")
+                        .IsRequired()
+                        .HasColumnName("client_type1")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ClientId");
 
                     b.ToTable("client");
 
-                    b.HasDiscriminator<string>("ClientType").HasValue("Client");
+                    b.HasDiscriminator<string>("client_type").HasValue("Client");
                 });
 
             modelBuilder.Entity("Officina.Models.ClientDetail", b =>

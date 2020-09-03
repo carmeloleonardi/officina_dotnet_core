@@ -8,7 +8,6 @@ namespace Officina.Models
 {
     public class ClientCompany : Client
     {
-        
         public string VATNumber { get; set; }
         [Required]
         public string CompanyName { get; set; }
