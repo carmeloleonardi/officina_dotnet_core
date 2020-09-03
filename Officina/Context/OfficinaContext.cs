@@ -29,30 +29,34 @@ namespace Officina.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //----- ereditarietà clienti
             modelBuilder.Entity<Client>()
                 .HasDiscriminator<string>("client_type")
                 .HasValue<ClientCompany>("COMPANY")
                 .HasValue<PrivateClient>("PRIVATE");
-
+            //----- 1-1 clienti - client detail
             modelBuilder.Entity<Client>()
                 .HasOne(b => b.ClientDetail)
                 .WithOne(b => b.Client)
                 .HasForeignKey<ClientDetail>(b => b.ClientId);
-
+            //----- automobili - clienti
             modelBuilder.Entity<Car>()
                 .HasOne(b => b.Client)
-                .WithMany(b => b.Cars);
+                .WithMany(b => b.Cars)
+                .IsRequired();
 
+            // automobile--libretto
             modelBuilder.Entity<Car>()
                 .HasOne(b => b.CertificateCar)
                 .WithOne(b => b.Car)
-                .HasForeignKey<CertificateCar>(b => b.CarId);
+                .HasForeignKey<CertificateCar>(b => b.CertificateCarID);
 
+            // operazioni - auto
             modelBuilder.Entity<Operation>()
                 .HasOne(b => b.Car)
                 .WithMany(b => b.Operations);
-
-            modelBuilder.Entity<PieceOperation>()
+            //pezzi operazioni
+            modelBuilder.Entity<PieceOperation>()   //chiave primaria
                 .HasKey(p => new { p.OperationId, p.PieceId });
 
             modelBuilder.Entity<PieceOperation>()
@@ -65,7 +69,7 @@ namespace Officina.Context
                 .WithMany(b => b.PieceOperations)
                 .HasForeignKey(p => p.PieceId);
 
-            //--------------------------------------
+            //operai operazioni
 
             modelBuilder.Entity<Employement>()
                 .HasKey(p => new { p.OperationId, p.WorkmanId });

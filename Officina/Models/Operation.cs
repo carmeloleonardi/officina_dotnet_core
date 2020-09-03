@@ -15,7 +15,7 @@ namespace Officina.Models
         [DataType(DataType.Date)]
         public DateTime DateEnd { get; set; }
 
-        public string CarId { get; set; }
+        public long CarId { get; set; }
         public Car Car { get; set; }
 
         public List<Employement> Employements { get; set; }
